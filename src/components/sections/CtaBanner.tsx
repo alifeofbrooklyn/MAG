@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import type { Dictionary } from "@/i18n";
 import { sectionIds } from "@/data/site";
 import { buttonClass } from "@/components/ui/Button";
+import Magnetic from "@/components/motion/Magnetic";
 
 /** 9. Call-to-Action — พื้นหลังน้ำเงินเข้ม */
 export default function CtaBanner({ t }: { t: Dictionary }) {
@@ -25,10 +26,12 @@ export default function CtaBanner({ t }: { t: Dictionary }) {
           </h2>
           <p className="mt-4 text-lg text-slate-300">{t.cta.text}</p>
         </div>
-        <a href={`#${sectionIds.contact}`} className={buttonClass("white", "lg", "reveal-right group shrink-0")}>
+        <Magnetic className="reveal-right shrink-0">
+        <a href={`#${sectionIds.contact}`} className={buttonClass("white", "lg", "group shine")}>
           {t.cta.button}
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </a>
+        </Magnetic>
       </div>
     </section>
   );

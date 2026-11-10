@@ -26,11 +26,11 @@ export default function ThemeToggle({ labelLight, labelDark }: { labelLight: str
       onClick={toggle}
       aria-label={dark ? labelLight : labelDark}
       title={dark ? labelLight : labelDark}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-600 transition-colors hover:bg-sky-soft hover:text-brand dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-600 transition-colors hover:bg-sky-soft hover:text-brand dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white group-data-[transparent=true]:text-white group-data-[transparent=true]:hover:bg-white/10"
     >
       {/* แสดงทั้งสองไอคอนแล้วซ่อนด้วย CSS เพื่อไม่ให้กระพริบตอนโหลด */}
-      <Sun className="hidden h-5 w-5 dark:block" aria-hidden="true" />
-      <Moon className="h-5 w-5 dark:hidden" aria-hidden="true" />
+      <Sun className="hidden h-5 w-5 transition-transform duration-500 hover:rotate-90 dark:block" aria-hidden="true" />
+      <Moon className="h-5 w-5 transition-transform duration-500 hover:-rotate-12 dark:hidden" aria-hidden="true" />
     </button>
   );
 }

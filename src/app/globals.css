@@ -14,6 +14,8 @@
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .hero-in, .reveal, .reveal-left, .reveal-right, .reveal-zoom { opacity: 1 !important; transform: none !important; }
   }
+  /* กันหน้าเลื่อนด้านข้างจาก animation ที่เข้าจากซ้าย/ขวา */
+  html, body { overflow-x: clip; }
   body {
     @apply bg-white text-ink antialiased dark:bg-navy-900 dark:text-slate-200;
     font-feature-settings: "cv11", "ss01";
@@ -121,3 +123,98 @@ html[lang="th"] .eyebrow,
 html[lang="th"] [class*="tracking-[0."] {
   letter-spacing: 0.02em;
 }
+
+/* ===================== ลูกเล่นสมัยใหม่ (Modern effects) ===================== */
+
+/* Lenis smooth scroll */
+html.lenis-on { scroll-behavior: auto; }
+html.lenis-on body { height: auto; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* หัวข้อ Hero ขึ้นทีละคำ */
+@keyframes word-in { from { transform: translateY(105%); opacity: 0; } to { transform: none; opacity: 1; } }
+.word-in { animation: word-in 1s var(--ease) both; animation-delay: var(--d, 0ms); }
+
+/* ตัวอักษรไล่สี */
+.text-gradient {
+  background: linear-gradient(100deg, #7cc3e0 0%, #2E86AB 45%, #b9e3f4 90%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: gradient-pan 6s ease-in-out infinite alternate;
+}
+@keyframes gradient-pan { to { background-position: 100% center; } }
+
+/* ชั้นที่ขยับตามเมาส์ใน Hero (HeroPointer ส่ง --mx/--my) */
+.hero-layer {
+  transform: translate3d(calc(var(--mx, 0) * var(--depth, 10px)), calc(var(--my, 0) * var(--depth, 10px)), 0);
+  transition: transform .6s var(--ease);
+}
+
+/* การ์ดกระจก (glassmorphism) */
+.glass {
+  background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.04));
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.2);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+@keyframes float-slow { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+.float-slow { animation: hero-in 1s var(--ease) forwards, float-slow 7s ease-in-out 2s infinite; animation-delay: var(--d, 0ms), 2s; }
+
+/* แสงเรืองเคลื่อนไหวใน Hero */
+@keyframes aurora { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(120px, -60px) scale(1.2); } }
+.aurora { animation: aurora 16s ease-in-out infinite; }
+
+/* ตาราง blueprint ใน Hero */
+.hero-grid {
+  background-image: linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at 30% 50%, #000 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 30% 50%, #000 20%, transparent 70%);
+}
+
+/* จุดกะพริบ (สถานะ "live") */
+@keyframes pulse-dot { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(3.2); opacity: 0; } }
+.pulse-dot { animation: pulse-dot 1.8s ease-out infinite; }
+
+/* เมาส์ชวนเลื่อนลง */
+@keyframes scroll-dot { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(12px); opacity: 0; } 100% { opacity: 0; } }
+.scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
+
+/* แสงวิ่งผ่านปุ่ม */
+.shine { position: relative; overflow: hidden; }
+.shine::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-120%) skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(46,134,171,.25), transparent);
+  animation: shine 4.5s ease-in-out 2.5s infinite;
+}
+@keyframes shine { 0%, 60% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+
+/* การ์ดแสงตามเมาส์ (SpotlightCard ส่ง --x/--y) */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), rgba(46,134,171,.14), transparent 60%);
+}
+.spotlight:hover::before { opacity: 1; }
+.dark .spotlight::before { background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), rgba(91,169,203,.16), transparent 60%); }
+
+/* แถบชื่อโครงการเลื่อนวนไม่สิ้นสุด (marquee) */
+.marquee { mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.marquee-track { display: flex; width: max-content; animation: marquee 45s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Lightbox ผลงาน */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop-in { from { opacity: 0; transform: translateY(20px) scale(.97); } to { opacity: 1; transform: none; } }
+.fade-in { animation: fade-in .3s ease both; }
+.pop-in { animation: pop-in .45s var(--ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .word-in, .float-slow { opacity: 1 !important; transform: none !important; }
+  .hero-layer { transform: none !important; }
+}
+
+/* หัวข้อ Hero ภาษาไทยคำยาว — ลดขนาดลงเล็กน้อยให้ตัดบรรทัดสวย */
+html[lang="th"] #hero-title { font-size: clamp(2.3rem, 4.4vw, 3.6rem); line-height: 1.25; }

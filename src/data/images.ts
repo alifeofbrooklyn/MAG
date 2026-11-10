@@ -10,7 +10,8 @@ const unsplash = (id: string, w = 1600) =>
 
 export const images = {
   hero: unsplash("1565008447742-97f6f38c985c", 2000),
-  about: unsplash("1541888946425-d81bb19240f5", 1200),
+  // รูปจาก Facebook MAG CONSULTANT — Dynamic Load Test ที่ Harn Office Building
+  about: "/images/about.webp",
   quality: unsplash("1486406146926-c627a92ad1ab", 1600),
 
   // รูปผลงานอยู่ใน src/data/projects.ts (ไฟล์ public/images/projects/)

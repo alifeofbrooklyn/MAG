@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import type { Dictionary } from "@/i18n";
 import { images } from "@/data/images";
 import { sectionIds } from "@/data/site";
+import Parallax from "@/components/motion/Parallax";
 
 /** 8. นโยบายคุณภาพ — พื้นฟ้าอ่อน + ลายเส้น blueprint + รูปอาคารจางๆ */
 export default function QualityPolicy({ t }: { t: Dictionary }) {
@@ -15,7 +16,9 @@ export default function QualityPolicy({ t }: { t: Dictionary }) {
     >
       <div className="blueprint-grid grid-drift absolute inset-0 -z-10" aria-hidden="true" />
       <div className="absolute inset-y-0 right-0 -z-20 hidden w-1/2 lg:block" aria-hidden="true">
-        <Image src={images.quality} alt="" fill sizes="50vw" className="object-cover opacity-[0.12] grayscale dark:opacity-[0.08]" />
+        <Parallax speed={-0.15} className="absolute -inset-y-24 inset-x-0">
+          <Image src={images.quality} alt="" fill sizes="50vw" className="object-cover opacity-[0.12] grayscale dark:opacity-[0.08]" />
+        </Parallax>
         <div className="absolute inset-0 bg-gradient-to-r from-sky-soft via-sky-soft/70 to-transparent dark:from-navy-800 dark:via-navy-800/70" />
       </div>
 

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>บันทึกรูป About</title>
+<style>
+  body { font-family: "Segoe UI", Tahoma, sans-serif; background: #EAF3F8; color: #0B1F3A; margin: 0; padding: 32px 16px; }
+  .box { max-width: 560px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 10px 30px rgba(11,31,58,.12); }
+  h1 { font-size: 21px; margin: 0 0 8px; }
+  li { line-height: 1.7; }
+  code { background: #EAF3F8; padding: 2px 6px; border-radius: 4px; }
+  button { background: #124E78; color: #fff; border: 0; border-radius: 8px; padding: 12px 22px; font-size: 16px; font-weight: 600; cursor: pointer; margin: 6px 6px 6px 0; }
+  button.alt { background: #fff; color: #124E78; border: 1px solid #124E78; }
+  img { width: 100%; max-width: 280px; border-radius: 8px; display: block; margin: 16px 0; }
+  #status { font-weight: 600; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>บันทึกรูปส่วน About (จาก Facebook MAG CONSULTANT)</h1>
+  <img id="preview" alt="Dynamic load test" referrerpolicy="no-referrer">
+  <ol>
+    <li>กด <b>“เลือกโฟลเดอร์และบันทึก”</b></li>
+    <li>เลือกโฟลเดอร์ <code>D:\MAG\public\images</code> (โฟลเดอร์ที่มี logo.webp) แล้วกด <b>Select Folder</b> → <b>Edit files</b></li>
+  </ol>
+  <button id="save">เลือกโฟลเดอร์และบันทึก</button>
+  <button id="dl" class="alt">ดาวน์โหลดลง Downloads แทน</button>
+  <div id="status"></div>
+</div>
+<script>
+const URL_ = "https://scontent.fbkk12-6.fna.fbcdn.net/v/t1.6435-9/50636763_2237078149886840_4702943202905161728_n.jpg?stp=dst-jpg_tt6&cstp=mx562x750&ctp=s562x750&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=4CNOw8989oEQ7kNvwHcifHO&_nc_oc=AdqJmZp79uKyy0qULWq9Iu9YugZy01cuSHXw7rMGZTQVxay2w4XqRcSWU6qJAKftjgiw7oqzFH5VRFLWUXvktKck&_nc_zt=23&_nc_ht=scontent.fbkk12-6.fna&_nc_gid=FzHxEc3NTneYDzhilG39JA&_nc_ss=792a8&oh=00_AQRfrpcPKSCy7sKLltugjxT8ftjmWwKWCsjkKNYhGCBRjA&oe=6B1A7BC8";
+const NAME = "about.webp";
+const st = document.getElementById("status");
+document.getElementById("preview").src = URL_;
+
+async function make() {
+  const res = await fetch(URL_, { referrerPolicy: "no-referrer" });
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const bmp = await createImageBitmap(await res.blob());
+  const cv = document.createElement("canvas");
+  cv.width = bmp.width; cv.height = bmp.height;
+  cv.getContext("2d").drawImage(bmp, 0, 0);
+  return await new Promise((r) => cv.toBlob(r, "image/webp", 0.85));
+}
+
+document.getElementById("save").onclick = async () => {
+  if (!window.showDirectoryPicker) { st.textContent = "กรุณาเปิดไฟล์นี้ด้วย Chrome หรือ Edge หรือกดปุ่มดาวน์โหลดแทน"; return; }
+  try {
+    const dir = await window.showDirectoryPicker({ mode: "readwrite" });
+    const fh = await dir.getFileHandle(NAME, { create: true });
+    const w = await fh.createWritable(); await w.write(await make()); await w.close();
+    st.textContent = `✓ บันทึก ${NAME} ในโฟลเดอร์ “${dir.name}” แล้ว`;
+  } catch (e) { st.textContent = "ยกเลิก หรือเกิดข้อผิดพลาด: " + e.message; }
+};
+document.getElementById("dl").onclick = async () => {
+  try {
+    const a = document.createElement("a"); a.href = URL.createObjectURL(await make()); a.download = NAME;
+    document.body.appendChild(a); a.click(); a.remove();
+    st.textContent = `✓ ดาวน์โหลด ${NAME} แล้ว — ย้ายไปไว้ที่ D:\\MAG\\public\\images`;
+  } catch (e) { st.textContent = "เกิดข้อผิดพลาด: " + e.message; }
+};
+</script>
+</body>
+</html>

@@ -36,7 +36,7 @@ const en = {
     p3: "We support our clients from the initial concept and planning stage through construction, coordination, and final project close-out.",
     stages: ["Concept & Planning", "Construction & Coordination", "Project Close-out"],
     cta: "Learn More About Us",
-    imageAlt: "Project team reviewing progress on a construction site",
+    imageAlt: "Pile dynamic load test on a MAG CONSULTANT project site (Harn Office Building)",
     badge: "Manage to Achieve Goal",
   },
   stats: {
@@ -87,6 +87,11 @@ const en = {
       infrastructure: "Infrastructure",
     },
     all: "All",
+    marquee: "Selected projects",
+    view: "View project",
+    close: "Close",
+    prev: "Previous project",
+    next: "Next project",
   },
   why: {
     eyebrow: "Our Strengths",

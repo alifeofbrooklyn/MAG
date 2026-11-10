@@ -5,6 +5,7 @@ import type { Dictionary } from "@/i18n";
 import { images } from "@/data/images";
 import { sectionIds } from "@/data/site";
 import { buttonClass } from "@/components/ui/Button";
+import Parallax from "@/components/motion/Parallax";
 
 /** 3. About — ข้อความซ้าย / รูปขวา */
 export default function About({ t }: { t: Dictionary }) {
@@ -44,13 +45,15 @@ export default function About({ t }: { t: Dictionary }) {
 
         <div className="reveal-right relative" style={{ "--d": "150ms" } as CSSProperties}>
           <div className="relative aspect-[4/5] overflow-hidden rounded-lg shadow-lift sm:aspect-[5/4] lg:aspect-[4/5]">
-            <Image
-              src={images.about}
-              alt={t.about.imageAlt}
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 hover:scale-105"
-            />
+            <Parallax speed={-0.08} className="absolute -inset-y-12 inset-x-0">
+              <Image
+                src={images.about}
+                alt={t.about.imageAlt}
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover transition-transform duration-700 hover:scale-105"
+              />
+            </Parallax>
           </div>
           {/* กรอบตกแต่ง */}
           <div
