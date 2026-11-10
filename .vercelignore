@@ -1,0 +1,7 @@
+# ไฟล์ที่ไม่ต้องอัปโหลดขึ้น Vercel
+.env
+.env.local
+.env*.local
+node_modules
+.next
+tools
