@@ -21,7 +21,6 @@ const en = {
     language: "Language",
     themeLight: "Switch to light mode",
     themeDark: "Switch to dark mode",
-    skipIntro: "Skip",
     team: "Our Team",
   },
   hero: {

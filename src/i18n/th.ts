@@ -23,7 +23,6 @@ const th: Dictionary = {
     language: "ภาษา",
     themeLight: "เปลี่ยนเป็นโหมดสว่าง",
     themeDark: "เปลี่ยนเป็นโหมดมืด",
-    skipIntro: "ข้าม",
     team: "ทีมงาน",
   },
   hero: {

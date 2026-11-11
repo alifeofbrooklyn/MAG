@@ -52,7 +52,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Contact t={t} locale={locale} />
       </main>
       <Footer t={t} locale={locale} />
-      <IntroLoader skipLabel={t.nav.skipIntro} tagline={t.hero.tagline} />
+      <IntroLoader tagline={t.hero.tagline} />
       <Reveal />
       {/* ลูกเล่นเสริม — ลบบรรทัดไหนก็ได้ถ้าไม่ต้องการ */}
       <SmoothScroll />

@@ -10,13 +10,13 @@ import { useEffect, useRef } from "react";
  *
  * - เล่นครั้งเดียวต่อการเปิดแท็บ (sessionStorage "mag-intro")
  * - สคริปต์ใน <head> (layout.tsx) ใส่ class "intro" ให้ <html> ก่อนวาดหน้า จึงไม่กระพริบ
- * - กด "ข้าม" หรือปุ่ม Esc เพื่อข้ามได้
+ * - กดปุ่ม Esc เพื่อข้ามได้ (ไม่มีปุ่มข้ามบนจอ)
  * - ปรับเวลาได้ที่ globals.css (หัวข้อ INTRO)
  */
 const LAYERS = 7; // จำนวนชั้นที่ซ้อนกันเป็นความหนาของโลโก้ 3D
 const TOTAL_MS = 5000;
 
-export default function IntroLoader({ skipLabel, tagline }: { skipLabel: string; tagline: string }) {
+export default function IntroLoader({ tagline }: { tagline: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,13 +48,6 @@ export default function IntroLoader({ skipLabel, tagline }: { skipLabel: string;
     };
   }, []);
 
-  const skip = () => {
-    document.documentElement.classList.remove("intro");
-    try {
-      sessionStorage.setItem("mag-intro", "1");
-    } catch {}
-    (window as unknown as { __lenis?: { start(): void } }).__lenis?.start();
-  };
 
   return (
     <div ref={ref} className="intro-overlay" aria-hidden="true">
@@ -105,9 +98,6 @@ export default function IntroLoader({ skipLabel, tagline }: { skipLabel: string;
         <p className="intro-tagline">{tagline}</p>
       </div>
 
-      <button type="button" onClick={skip} className="intro-skip" tabIndex={-1}>
-        {skipLabel}
-      </button>
     </div>
   );
 }

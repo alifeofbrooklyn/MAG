@@ -313,12 +313,6 @@ header { transition: opacity .6s ease .1s; }
   letter-spacing: .5em; text-transform: uppercase; padding-left: .5em;
   animation: intro-tag 1s cubic-bezier(.16,1,.3,1) 1.7s both;
 }
-.intro-skip {
-  position: absolute; bottom: 1.5rem; right: 1.5rem; color: rgba(255,255,255,.6); font-size: .75rem;
-  letter-spacing: .2em; text-transform: uppercase; padding: .5rem .9rem; border: 1px solid rgba(255,255,255,.25); border-radius: 9999px;
-  transition: color .2s, border-color .2s;
-}
-.intro-skip:hover { color: #fff; border-color: #fff; }
 
 @keyframes intro-melt {
   0% { opacity: 0; filter: blur(18px); }
