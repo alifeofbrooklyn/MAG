@@ -21,7 +21,9 @@ export const site = {
 export const sectionIds = {
   about: "about",
   services: "services",
+  products: "products",
   projects: "projects",
+  profile: "profile",
   quality: "quality",
   contact: "contact",
 } as const;

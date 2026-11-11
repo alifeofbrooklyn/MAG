@@ -4,7 +4,12 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
-import Stats from "@/components/sections/Stats";
+import Intro from "@/components/sections/Intro";
+import Mission from "@/components/sections/Mission";
+import Process from "@/components/sections/Process";
+import Products from "@/components/sections/Products";
+import Sectors from "@/components/sections/Sectors";
+import CompanyProfile from "@/components/sections/CompanyProfile";
 import Services from "@/components/sections/Services";
 import Projects from "@/components/sections/Projects";
 import WhyUs from "@/components/sections/WhyUs";
@@ -30,11 +35,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Header t={t} locale={locale} />
       <main id="main">
         <Hero t={t} />
+        <Intro t={t} />
         <About t={t} />
-        <Stats t={t} />
-        <ProjectMarquee t={t} locale={locale} />
+        <Mission t={t} />
         <Services t={t} />
+        <Process t={t} />
+        <Products t={t} locale={locale} />
+        <ProjectMarquee t={t} locale={locale} />
         <Projects t={t} locale={locale} />
+        <Sectors t={t} />
+        <CompanyProfile t={t} />
         <WhyUs t={t} />
         <QualityPolicy t={t} />
         <CtaBanner t={t} />

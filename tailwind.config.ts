@@ -15,6 +15,7 @@ const config: Config = {
         accent: { DEFAULT: "#2E86AB", light: "#5BA9CB" },
         sky: { soft: "#EAF3F8" },
         ink: "#1F2933",
+        mist: "#F3F6F9",
       },
       fontFamily: {
         sans: ['"Inter Variable"', '"Noto Sans Thai Variable"', "system-ui", "sans-serif"],

@@ -44,8 +44,12 @@ npm start            # รันเวอร์ชันจริงหลัง
 
 ```
 MAG/
-├─ public/images/logo.webp        ← โลโก้บริษัท
-├─ public/images/projects/        ← รูปผลงาน (mag-ratchawong.webp, mag-oblique.webp, ...)
+├─ public/images/logo-navy.png    ← โลโก้พื้นโปร่งใส สีน้ำเงิน (ใช้บนพื้นสว่าง)
+├─ public/images/logo-white.png   ← โลโก้พื้นโปร่งใส สีขาว (ใช้บนพื้นเข้ม / Footer)
+├─ public/images/projects/        ← รูปผลงานอ้างอิง (จาก Facebook)
+├─ public/images/products/        ← รูป Products (จากเว็บเดิม)
+├─ public/images/profile/         ← สไลด์ Company Profile 8 หน้า
+├─ public/company-profile.pdf     ← ไฟล์ Company Profile ให้ดาวน์โหลด
 ├─ src/
 │  ├─ app/
 │  │  ├─ [locale]/layout.tsx      ← โครงหลักของทุกหน้า: SEO, ฟอนต์, ข้อมูล Google (JSON-LD), สคริปต์โหมดมืด
@@ -61,10 +65,16 @@ MAG/
 │  │  │  ├─ ThemeToggle.tsx       ← ปุ่มโหมดมืด/สว่าง
 │  │  │  └─ Footer.tsx            ← ส่วนท้ายเว็บ
 │  │  ├─ sections/                ← แต่ละส่วนของหน้าแรก (1 ไฟล์ = 1 section)
-│  │  │  ├─ Hero.tsx              ← (2) ภาพใหญ่ด้านบน + หัวข้อหลัก + ปุ่ม
+│  │  │  ├─ Hero.tsx              ← (2) Hero แบบภาพยนตร์: กรอบรูปขยายเต็มจอเมื่อเลื่อน (ปักหมุดหน้าจอ)
+│  │  │  ├─ Intro.tsx             ← ข้อความใหญ่ที่เข้มขึ้นทีละคำ + ตัวเลขสถิติ
+│  │  │  ├─ Mission.tsx           ← Manage · Achieve · Goal + On time / Within budget / Specified quality
+│  │  │  ├─ Process.tsx           ← ขั้นตอนการทำงาน 01–04 (เส้นเวลาวิ่งตามการเลื่อน)
+│  │  │  ├─ Products.tsx          ← Products จากเว็บเดิม (เลื่อนแนวนอน + ดูเต็มจอ)
+│  │  │  ├─ Sectors.tsx           ← ประเภทโครงการ 8 ประเภท
+│  │  │  ├─ CompanyProfile.tsx    ← ดูสไลด์ Company Profile + ปุ่มดาวน์โหลด PDF
 │  │  │  ├─ About.tsx             ← (3) เกี่ยวกับ MAG CONSULTANT
-│  │  │  ├─ Stats.tsx             ← (4) ตัวเลขสถิติ 20+ / 100+ / 3 / ประเทศไทย
-│  │  │  ├─ Services.tsx          ← (5) บริการ 3 ด้าน
+│  │  │  ├─ Stats.tsx             ← (ไม่ได้ใช้แล้ว — ย้ายไปอยู่ใน Intro.tsx) ลบได้
+│  │  │  ├─ Services.tsx          ← Service: แท็บ PM / CM / QS พร้อมรายละเอียด
 │  │  │  ├─ Projects.tsx          ← (6) ผลงาน + ตัวกรองประเภท + ปุ่ม "ดูผลงานทั้งหมด"
 │  │  │  ├─ WhyUs.tsx             ← (7) ทำไมต้องเลือกเรา 6 ข้อ
 │  │  │  ├─ QualityPolicy.tsx     ← (8) นโยบายคุณภาพ
@@ -75,7 +85,8 @@ MAG/
 │  ├─ data/
 │  │  ├─ site.ts                  ← ★ ข้อมูลบริษัท: เบอร์โทร, อีเมล, Facebook, ลิงก์/แผนที่ Google Maps
 │  │  ├─ images.ts                ← ★ รูปภาพทั้งเว็บ (เปลี่ยนเป็นรูปจริงที่นี่)
-│  │  └─ projects.ts              ← ★ รายการผลงาน
+│  │  ├─ projects.ts              ← ★ รายการผลงานอ้างอิง (จาก Facebook)
+│  │  └─ products.ts              ← ★ รายการ Products + สไลด์ Company Profile (จากเว็บเดิม)
 │  ├─ i18n/
 │  │  ├─ th.ts                    ← ★ ข้อความภาษาไทยทั้งหมด
 │  │  ├─ en.ts                    ← ★ ข้อความภาษาอังกฤษทั้งหมด
@@ -100,9 +111,12 @@ MAG/
 | เบอร์โทร, อีเมลที่แสดงบนเว็บ, Facebook | `src/data/site.ts` | `phone` = ตัวที่แสดง, `phoneHref` = ตัวที่ใช้กดโทร |
 | แผนที่ Google Maps | `src/data/site.ts` → `mapLink`, `mapEmbed` | `mapEmbed` คือค่า `src="..."` จากโค้ด iframe ของ Google Maps |
 | เวลาทำการ | `src/i18n/*.ts` → `contact.hours` | |
-| โลโก้ | `public/images/logo.webp` | วางไฟล์ใหม่ทับชื่อเดิม (ถ้าสัดส่วนต่างจากเดิม แก้ `width/height` ใน `src/components/ui/Logo.tsx`) |
+| โลโก้ | `public/images/logo-navy.png` และ `logo-white.png` (PNG พื้นโปร่งใส) | วางไฟล์ใหม่ทับชื่อเดิม (ถ้าสัดส่วนต่างจากเดิม แก้ `width/height` ใน `src/components/ui/Logo.tsx`) |
 | รูป Hero, About, Quality Policy | `src/data/images.ts` | ดูหัวข้อ 5 |
 | รูปผลงาน | `public/images/projects/` | วางไฟล์ใหม่ทับชื่อเดิม หรือแก้ชื่อไฟล์ใน `src/data/projects.ts` |
+| Products (ชื่อ, ประเภท, รูป) | `src/data/products.ts` + `public/images/products/` | ลำดับในไฟล์ = ลำดับบนเว็บ |
+| สไลด์ / PDF Company Profile | `public/images/profile/` และ `public/company-profile.pdf` | วางไฟล์ใหม่ทับชื่อเดิม |
+| ข้อความ Mission / Process / Service / Sectors | `src/i18n/th.ts` และ `en.ts` (`mission`, `process`, `serviceDetail`, `sectors`) | เนื้อหามาจาก Company Profile ของบริษัท |
 | ผลงาน (ชื่อ, สถานที่, รายละเอียด, บริการ, รูป) | `src/data/projects.ts` | เพิ่มได้ไม่จำกัด แค่ copy บล็อก `{ ... }` เพิ่ม — `location` / `detail` ไม่ใส่ก็ได้ |
 | ประเภทผลงาน (ปุ่มตัวกรอง) | `src/i18n/*.ts` → `projects.categories` + `ProjectCategory` ใน `projects.ts` | ปุ่มจะแสดงเฉพาะประเภทที่มีผลงานอยู่จริง |
 | จำนวนการ์ดผลงานที่โชว์ก่อนกด "ดูผลงานทั้งหมด" | `src/components/sections/Projects.tsx` → `INITIAL = 6` | |

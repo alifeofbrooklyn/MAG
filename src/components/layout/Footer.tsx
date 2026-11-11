@@ -9,7 +9,9 @@ export default function Footer({ t, locale }: { t: Dictionary; locale: Locale })
   const quick = [
     { href: `#${sectionIds.about}`, label: t.nav.about },
     { href: `#${sectionIds.services}`, label: t.nav.services },
+    { href: `#${sectionIds.products}`, label: t.nav.productsNav },
     { href: `#${sectionIds.projects}`, label: t.nav.projects },
+    { href: `#${sectionIds.profile}`, label: t.nav.profile },
     { href: `#${sectionIds.quality}`, label: t.nav.quality },
     { href: `#${sectionIds.contact}`, label: t.nav.contact },
   ];
@@ -20,7 +22,7 @@ export default function Footer({ t, locale }: { t: Dictionary; locale: Locale })
     <footer className="bg-navy-900 text-sm text-slate-300 dark:border-t dark:border-white/10">
       <div className="container grid max-w-8xl gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <Logo href={`/${locale}`} />
+          <Logo href={`/${locale}`} tone="white" />
           <p className="mt-5 max-w-sm leading-relaxed text-slate-400">{t.footer.description}</p>
           <a
             href={site.facebook}

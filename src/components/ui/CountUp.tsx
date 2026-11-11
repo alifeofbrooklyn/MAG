@@ -15,7 +15,6 @@ export default function CountUp({ value, duration = 1600 }: { value: string; dur
 
   useEffect(() => {
     if (!match || !ref.current) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     setN(0);
     const el = ref.current;
     let raf = 0;

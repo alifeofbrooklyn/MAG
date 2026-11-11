@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import "@fontsource-variable/inter";
+import "@fontsource-variable/inter/wght-italic.css";
 import "@fontsource-variable/noto-sans-thai";
 import "../globals.css";
 import { getDictionary, isLocale, locales } from "@/i18n";

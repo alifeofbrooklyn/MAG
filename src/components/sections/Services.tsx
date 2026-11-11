@@ -1,54 +1,94 @@
-import { ArrowRight, Calculator, ClipboardList, HardHat } from "lucide-react";
-import type { CSSProperties } from "react";
+"use client";
+
+import Image from "next/image";
+import { useState } from "react";
+import { ArrowRight, Calculator, Check, ClipboardList, HardHat } from "lucide-react";
 import type { Dictionary } from "@/i18n";
 import { sectionIds } from "@/data/site";
 import SectionHeading from "@/components/ui/SectionHeading";
-import SpotlightCard from "@/components/motion/SpotlightCard";
+import { buttonClass } from "@/components/ui/Button";
 
-// ไอคอนของบริการแต่ละอย่าง เรียงตาม services.items ใน i18n
 const icons = [ClipboardList, HardHat, Calculator];
+// รูปประกอบของแต่ละแท็บ (Service จากเว็บเดิม + รูปผลงาน)
+const tabImages = ["/images/service.webp", "/images/about.webp", "/images/products/dplus-office.webp"];
 
-/** 5. บริการ — การ์ด 3 ใบ */
+/**
+ * 5. Service — แท็บ PM / CM / QS พร้อมรายละเอียดจาก Company Profile
+ */
 export default function Services({ t }: { t: Dictionary }) {
-  return (
-    <section
-      id={sectionIds.services}
-      aria-labelledby="services-title"
-      className="bg-slate-50 py-20 sm:py-28 dark:bg-navy-900"
-    >
-      <div className="container max-w-8xl">
-        <SectionHeading id="services-title" eyebrow={t.services.eyebrow} title={t.services.title} intro={t.services.intro} />
+  const [tab, setTab] = useState(0);
+  const [broken, setBroken] = useState<Record<number, boolean>>({});
+  const tabs = t.serviceDetail.tabs;
+  const cur = tabs[tab];
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {t.services.items.map((s, i) => {
+  return (
+    <section id={sectionIds.services} aria-labelledby="services-title" className="bg-mist py-24 sm:py-32 dark:bg-navy-900">
+      <div className="container max-w-7xl">
+        <SectionHeading id="services-title" eyebrow={t.serviceDetail.eyebrow} title={t.serviceDetail.title} intro={t.serviceDetail.intro} />
+
+        {/* ปุ่มแท็บ */}
+        <div role="tablist" aria-label={t.serviceDetail.title} className="reveal mx-auto mt-12 grid max-w-3xl grid-cols-3 gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-card dark:border-white/10 dark:bg-navy-800">
+          {tabs.map((x, i) => {
             const Icon = icons[i];
+            const on = i === tab;
             return (
-              <SpotlightCard
-                as="article"
-                key={s.title}
-                style={{ "--d": `${i * 140}ms` } as CSSProperties}
-                className="reveal card group relative flex flex-col overflow-hidden p-8 hover:shadow-lift"
+              <button
+                key={x.key}
+                role="tab"
+                id={`svc-tab-${i}`}
+                aria-selected={on}
+                aria-controls="svc-panel"
+                onClick={() => setTab(i)}
+                className={`relative flex flex-col items-center gap-1 rounded-xl px-3 py-3 text-center transition-all duration-300 sm:flex-row sm:justify-center sm:gap-3 ${
+                  on ? "bg-navy text-white shadow-lg dark:bg-accent dark:text-navy" : "text-slate-600 hover:bg-sky-soft hover:text-brand dark:text-slate-300 dark:hover:bg-white/5"
+                }`}
               >
-                <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-brand to-accent transition-transform duration-300 group-hover:scale-x-100" />
-                <span className="flex h-14 w-14 items-center justify-center rounded-md bg-sky-soft text-brand transition-colors group-hover:bg-brand group-hover:text-white dark:bg-white/5 dark:text-accent-light">
-                  <Icon className="h-7 w-7" strokeWidth={1.5} aria-hidden="true" />
-                </span>
-                <span className="pointer-events-none absolute -right-2 -top-6 -z-10 select-none text-[7rem] font-bold leading-none text-slate-100 transition-colors duration-500 group-hover:text-sky-soft dark:text-white/[0.04] dark:group-hover:text-white/[0.07]" aria-hidden="true">
-                  0{i + 1}
-                </span>
-                <h3 className="mt-6 text-xl font-bold text-navy dark:text-white">{s.title}</h3>
-                <p className="mt-3 flex-1 text-slate-600 dark:text-slate-400">{s.desc}</p>
-                <a
-                  href={`#${sectionIds.contact}`}
-                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:gap-2.5 dark:text-accent-light"
-                  aria-label={`${t.services.learnMore}: ${s.title}`}
-                >
-                  {t.services.learnMore}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </a>
-              </SpotlightCard>
+                <Icon className="h-5 w-5" aria-hidden="true" />
+                <span className="text-lg font-bold tracking-wide">{x.key}</span>
+                <span className="hidden text-xs font-medium opacity-80 lg:inline">{x.title}</span>
+              </button>
             );
           })}
+        </div>
+
+        {/* เนื้อหาแท็บ */}
+        <div id="svc-panel" role="tabpanel" aria-labelledby={`svc-tab-${tab}`} key={tab} className="mt-12 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="card-in relative aspect-[4/3] overflow-hidden rounded-3xl bg-gradient-to-br from-brand to-navy shadow-lift">
+            {!broken[tab] && (
+              <Image
+                src={tabImages[tab]}
+                alt={cur.title}
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="ken-burns object-cover"
+                onError={() => setBroken((b) => ({ ...b, [tab]: true }))}
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent" />
+            <span className="absolute bottom-5 left-6 text-[5.5rem] font-bold leading-none text-white/90 sm:text-[7rem]">{cur.key}</span>
+          </div>
+
+          <div className="card-in" style={{ ["--d" as string]: "120ms" }}>
+            <h3 className="text-3xl font-semibold tracking-tight text-navy sm:text-4xl dark:text-white">{cur.title}</h3>
+            <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">{cur.lead}</p>
+            <ol className="mt-8 space-y-3">
+              {cur.points.map((pt, i) => (
+                <li
+                  key={pt}
+                  className="card-in group flex items-center gap-4 rounded-xl border border-slate-200 bg-white px-5 py-4 transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-card dark:border-white/10 dark:bg-navy-800"
+                  style={{ ["--d" as string]: `${200 + i * 90}ms` }}
+                >
+                  <span className="text-sm font-semibold tabular-nums text-accent">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="flex-1 font-medium text-navy dark:text-slate-100">{pt}</span>
+                  <Check className="h-4 w-4 text-accent opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+                </li>
+              ))}
+            </ol>
+            <a href={`#${sectionIds.contact}`} className={buttonClass("primary", "lg", "group mt-8")}>
+              {t.hero.ctaPrimary}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </div>
     </section>

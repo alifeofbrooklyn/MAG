@@ -23,8 +23,9 @@ export default function Header({ t, locale }: { t: Dictionary; locale: Locale })
   const links = [
     { id: sectionIds.about, label: t.nav.about },
     { id: sectionIds.services, label: t.nav.services },
+    { id: sectionIds.products, label: t.nav.productsNav },
     { id: sectionIds.projects, label: t.nav.projects },
-    { id: sectionIds.quality, label: t.nav.quality },
+    { id: sectionIds.profile, label: t.nav.profile },
     { id: sectionIds.contact, label: t.nav.contact },
   ];
 
@@ -74,16 +75,16 @@ export default function Header({ t, locale }: { t: Dictionary; locale: Locale })
       >
         <Logo href={`/${locale}`} />
 
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
-            {links.slice(0, 4).map((l) => {
+        <nav aria-label="Main" className="hidden xl:block">
+          <ul className="flex items-center gap-0.5 xl:gap-1">
+            {links.slice(0, 5).map((l) => {
               const isActive = active === l.id;
               return (
                 <li key={l.id}>
                   <a
                     href={`#${l.id}`}
                     aria-current={isActive ? "true" : undefined}
-                    className={`relative rounded-md px-3 py-2 text-[0.94rem] font-medium transition-colors
+                    className={`relative whitespace-nowrap rounded-md px-2.5 py-2 text-[0.9rem] font-medium xl:px-3 transition-colors
                       after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:origin-left after:rounded-full after:bg-accent after:transition-transform after:duration-300
                       ${isActive ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100"}
                       ${
@@ -115,7 +116,7 @@ export default function Header({ t, locale }: { t: Dictionary; locale: Locale })
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? t.nav.close : t.nav.menu}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-md lg:hidden ${
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-md xl:hidden ${
               transparent ? "text-white hover:bg-white/10" : "text-navy hover:bg-sky-soft dark:text-white dark:hover:bg-white/10"
             }`}
           >
@@ -125,7 +126,7 @@ export default function Header({ t, locale }: { t: Dictionary; locale: Locale })
       </div>
 
       {/* เมนูมือถือ */}
-      <div id="mobile-menu" hidden={!open} className="border-t border-slate-200 bg-white lg:hidden dark:border-white/10 dark:bg-navy-900">
+      <div id="mobile-menu" hidden={!open} className="border-t border-slate-200 bg-white xl:hidden dark:border-white/10 dark:bg-navy-900">
         <nav aria-label="Mobile" className="container max-h-[calc(100dvh-4.5rem)] overflow-y-auto py-4">
           <ul className="flex flex-col">
             {links.map((l, i) => (
