@@ -5,15 +5,17 @@ import Logo from "@/components/ui/Logo";
 import { FacebookIcon } from "@/components/ui/Icons";
 
 /** 11. Footer */
-export default function Footer({ t, locale }: { t: Dictionary; locale: Locale }) {
+export default function Footer({ t, locale, home = true }: { t: Dictionary; locale: Locale; home?: boolean }) {
+  const b = home ? "" : `/${locale}`;
   const quick = [
-    { href: `#${sectionIds.about}`, label: t.nav.about },
-    { href: `#${sectionIds.services}`, label: t.nav.services },
-    { href: `#${sectionIds.products}`, label: t.nav.productsNav },
-    { href: `#${sectionIds.projects}`, label: t.nav.projects },
-    { href: `#${sectionIds.profile}`, label: t.nav.profile },
-    { href: `#${sectionIds.quality}`, label: t.nav.quality },
-    { href: `#${sectionIds.contact}`, label: t.nav.contact },
+    { href: `${b}#${sectionIds.about}`, label: t.nav.about },
+    { href: `${b}#${sectionIds.services}`, label: t.nav.services },
+    { href: `${b}#${sectionIds.products}`, label: t.nav.productsNav },
+    { href: `${b}#${sectionIds.projects}`, label: t.nav.projects },
+    { href: `/${locale}/team`, label: t.nav.team },
+    { href: `${b}#${sectionIds.profile}`, label: t.nav.profile },
+    { href: `${b}#${sectionIds.quality}`, label: t.nav.quality },
+    { href: `${b}#${sectionIds.contact}`, label: t.nav.contact },
   ];
   const linkCls = "text-slate-300 transition-colors hover:text-white";
   const headCls = "text-sm font-semibold uppercase tracking-[0.14em] text-white";
@@ -53,7 +55,7 @@ export default function Footer({ t, locale }: { t: Dictionary; locale: Locale })
           <ul className="mt-5 space-y-3">
             {t.services.items.map((s) => (
               <li key={s.title}>
-                <a href={`#${sectionIds.services}`} className={linkCls}>
+                <a href={`${b}#${sectionIds.services}`} className={linkCls}>
                   {s.title}
                 </a>
               </li>
@@ -89,7 +91,7 @@ export default function Footer({ t, locale }: { t: Dictionary; locale: Locale })
       <div className="border-t border-white/10">
         <div className="container flex max-w-8xl flex-col items-center justify-between gap-4 py-6 text-xs text-slate-400 sm:flex-row">
           <p>{t.footer.rights}</p>
-          <a href="#main" className="inline-flex items-center gap-1.5 hover:text-white">
+          <a href={home ? "#main" : `/${locale}`} className="inline-flex items-center gap-1.5 hover:text-white">
             {t.footer.backToTop}
             <ArrowUp className="h-3.5 w-3.5" aria-hidden="true" />
           </a>

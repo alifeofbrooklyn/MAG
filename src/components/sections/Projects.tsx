@@ -5,7 +5,8 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from "re
 import { ArrowRight, Briefcase, Building2, ChevronLeft, ChevronRight, Maximize2, MapPin, X } from "lucide-react";
 import type { Dictionary, Locale } from "@/i18n";
 import { projects, serviceShort, type Project, type ProjectCategory } from "@/data/projects";
-import { sectionIds } from "@/data/site";
+import { sectionIds, site } from "@/data/site";
+import { FacebookIcon } from "@/components/ui/Icons";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { buttonClass } from "@/components/ui/Button";
 
@@ -184,41 +185,76 @@ function Lightbox({
     return () => document.removeEventListener("keydown", onKey);
   }, [go, setIndex]);
 
+  const [pic, setPic] = useState(0);
+  const pics = [p.image, ...(p.gallery ?? [])];
+  const cur = pics[Math.min(pic, pics.length - 1)];
+  useEffect(() => setPic(0), [index]);
+
   const navBtn =
     "flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur transition hover:bg-white hover:text-navy";
+  const small = `${navBtn} !bg-sky-soft !text-brand hover:!bg-brand hover:!text-white dark:!bg-white/10 dark:!text-white`;
 
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-label={p.name[locale]}
-      className="fade-in fixed inset-0 z-[70] flex items-center justify-center bg-navy-900/90 p-4 backdrop-blur-md sm:p-8"
+      className="fade-in fixed inset-0 z-[70] flex items-center justify-center bg-navy-900/90 p-3 backdrop-blur-md sm:p-6"
       onClick={(e) => e.target === e.currentTarget && setIndex(null)}
     >
-      <button ref={closeRef} type="button" onClick={() => setIndex(null)} aria-label={t.projects.close} className={`${navBtn} absolute right-4 top-4`}>
+      <button ref={closeRef} type="button" onClick={() => setIndex(null)} aria-label={t.projects.close} className={`${navBtn} absolute right-4 top-4 z-10`}>
         <X className="h-5 w-5" aria-hidden="true" />
       </button>
 
-      <div key={index} className="pop-in grid w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl md:grid-cols-5 dark:bg-navy-800">
-        <div className="relative aspect-[4/3] bg-slate-200 md:col-span-3 md:aspect-auto md:min-h-[420px] dark:bg-navy-700">
-          {broken[p.image] ? (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand to-navy">
-              <Building2 className="h-16 w-16 text-white/40" strokeWidth={1.2} aria-hidden="true" />
+      <div key={index} data-lenis-prevent className="pop-in grid max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-2xl bg-white shadow-2xl lg:grid-cols-12 dark:bg-navy-800">
+        {/* รูป + แกลเลอรี */}
+        <div className="flex min-h-0 flex-col bg-navy-900 lg:col-span-7">
+          <div className="relative aspect-[4/3] w-full overflow-hidden lg:aspect-auto lg:flex-1">
+            {broken[cur] ? (
+              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand to-navy">
+                <Building2 className="h-16 w-16 text-white/40" strokeWidth={1.2} aria-hidden="true" />
+              </div>
+            ) : (
+              <>
+                <Image src={cur} alt="" aria-hidden="true" fill sizes="200px" className="scale-110 object-cover opacity-40 blur-2xl" />
+                <Image key={cur} src={cur} alt={p.name[locale]} fill sizes="(min-width: 1024px) 60vw, 100vw" className="fade-in object-contain" />
+              </>
+            )}
+            {pics.length > 1 && (
+              <span className="absolute bottom-3 right-3 rounded-full bg-black/50 px-3 py-1 text-xs tabular-nums text-white backdrop-blur">
+                {pic + 1} / {pics.length}
+              </span>
+            )}
+          </div>
+          {pics.length > 1 && (
+            <div className="no-scrollbar flex gap-2 overflow-x-auto bg-navy-900 p-3">
+              {pics.map((src, k) => (
+                <button
+                  key={src}
+                  type="button"
+                  onClick={() => setPic(k)}
+                  aria-label={`${t.projects.gallery} ${k + 1}`}
+                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-md ring-2 transition ${k === pic ? "ring-accent" : "opacity-60 ring-transparent hover:opacity-100"}`}
+                >
+                  <Image src={src} alt="" fill sizes="80px" className="object-cover" />
+                </button>
+              ))}
             </div>
-          ) : (
-            <Image src={p.image} alt={p.name[locale]} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover" />
           )}
         </div>
-        <div className="flex flex-col p-7 md:col-span-2 md:p-9">
+
+        {/* ข้อมูลโครงการ */}
+        <div data-lenis-prevent className="flex min-h-0 flex-col overflow-y-auto p-6 sm:p-8 lg:col-span-5">
           <span className="eyebrow">{t.projects.categories[p.category]}</span>
           <h3 className="mt-3 text-2xl font-bold text-navy dark:text-white">{p.name[locale]}</h3>
-          {p.detail && <p className="mt-3 text-slate-600 dark:text-slate-300">{p.detail[locale]}</p>}
-          <dl className="mt-6 space-y-4 text-sm">
+          {p.detail && <p className="mt-2 text-slate-600 dark:text-slate-300">{p.detail[locale]}</p>}
+
+          <dl className="mt-5 space-y-4 text-sm">
             {p.location && (
               <div>
                 <dt className="text-xs font-semibold uppercase tracking-wide text-slate-400">{t.projects.labels.location}</dt>
-                <dd className="mt-1 flex items-center gap-2 text-navy dark:text-slate-100">
-                  <MapPin className="h-4 w-4 text-accent" aria-hidden="true" />
+                <dd className="mt-1 flex items-start gap-2 text-navy dark:text-slate-100">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                   {p.location[locale]}
                 </dd>
               </div>
@@ -234,15 +270,46 @@ function Lightbox({
               </dd>
             </div>
           </dl>
-          <div className="mt-auto flex items-center justify-between gap-3 pt-8">
+
+          {p.description && (
+            <div className="mt-6 border-t border-slate-200 pt-5 dark:border-white/10">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{t.projects.about}</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{p.description[locale]}</p>
+            </div>
+          )}
+
+          {p.credits && (
+            <div className="mt-5 border-t border-slate-200 pt-5 dark:border-white/10">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{t.projects.team}</p>
+              <dl className="mt-2 divide-y divide-slate-100 text-sm dark:divide-white/10">
+                {p.credits.map((c) => (
+                  <div key={c.label.en + c.value} className="grid grid-cols-5 gap-3 py-2">
+                    <dt className="col-span-2 text-slate-500 dark:text-slate-400">{c.label[locale]}</dt>
+                    <dd className="col-span-3 font-medium text-navy dark:text-slate-100">{c.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+
+          {p.note && (
+            <p className="mt-5 rounded-lg bg-sky-soft px-4 py-3 text-sm text-brand dark:bg-white/5 dark:text-accent-light">{p.note[locale]}</p>
+          )}
+
+          <a href={site.facebook} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:underline dark:text-accent-light">
+            <FacebookIcon className="h-4 w-4" />
+            {t.projects.fb}
+          </a>
+
+          <div className="mt-auto flex items-center justify-between gap-3 pt-6">
             <span className="text-sm tabular-nums text-slate-400">
               {String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
             </span>
             <div className="flex gap-2">
-              <button type="button" onClick={() => go(-1)} aria-label={t.projects.prev} className={`${navBtn} !bg-sky-soft !text-brand hover:!bg-brand hover:!text-white dark:!bg-white/10 dark:!text-white`}>
+              <button type="button" onClick={() => go(-1)} aria-label={t.projects.prev} className={small}>
                 <ChevronLeft className="h-5 w-5" aria-hidden="true" />
               </button>
-              <button type="button" onClick={() => go(1)} aria-label={t.projects.next} className={`${navBtn} !bg-sky-soft !text-brand hover:!bg-brand hover:!text-white dark:!bg-white/10 dark:!text-white`}>
+              <button type="button" onClick={() => go(1)} aria-label={t.projects.next} className={small}>
                 <ChevronRight className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>

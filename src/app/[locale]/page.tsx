@@ -16,6 +16,7 @@ import WhyUs from "@/components/sections/WhyUs";
 import QualityPolicy from "@/components/sections/QualityPolicy";
 import CtaBanner from "@/components/sections/CtaBanner";
 import Contact from "@/components/sections/Contact";
+import IntroLoader from "@/components/motion/IntroLoader";
 import Reveal from "@/components/ui/Reveal";
 import ProjectMarquee from "@/components/sections/ProjectMarquee";
 import SmoothScroll from "@/components/motion/SmoothScroll";
@@ -51,6 +52,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Contact t={t} locale={locale} />
       </main>
       <Footer t={t} locale={locale} />
+      <IntroLoader skipLabel={t.nav.skipIntro} tagline={t.hero.tagline} />
       <Reveal />
       {/* ลูกเล่นเสริม — ลบบรรทัดไหนก็ได้ถ้าไม่ต้องการ */}
       <SmoothScroll />

@@ -129,6 +129,10 @@ MAG/
 | อีเมลผู้รับข้อความจากฟอร์ม | `.env.local` → `CONTACT_TO_EMAIL` | ดูหัวข้อ 6 |
 | ปิด animation ตอนเลื่อน | ลบ `<Reveal />` ใน `page.tsx` | |
 | ปรับ motion (ความเร็ว, ระยะ, ปิดบางอย่าง) | `src/app/globals.css` ส่วน `Motion` | ดูหัวข้อ 8 |
+| Intro โลโก้ 3D ตอนเปิดเว็บ | `src/components/motion/IntroLoader.tsx` + `globals.css` หัวข้อ `INTRO` | เล่นครั้งเดียวต่อแท็บ · ปิดทั้งหมด = ลบ `<IntroLoader ... />` ใน `page.tsx` และลบส่วน `classList.add('intro')` ใน `layout.tsx` |
+| รูปพื้นหลัง "Manage to Achieve Goal" | `public/images/gallery/mission.webp` | วางไฟล์ใหม่ทับชื่อเดิม |
+| รายละเอียดผลงานตอนกดเปิด (คำอธิบาย, ทีมโครงการ, หมายเหตุ, แกลเลอรี) | `src/data/projects.ts` → `description`, `credits`, `note`, `gallery` | รูปแกลเลอรีอยู่ที่ `public/images/gallery/` |
+| หน้า Meet Our Team (`/th/team`) | `src/data/team.ts` | ข้อความหัวหน้าเพจอยู่ใน `src/i18n/*.ts` → `team` · ไม่ลงข้อมูลส่วนตัว (วันเกิด ที่อยู่ เบอร์/อีเมลส่วนตัว) |
 
 ---
 

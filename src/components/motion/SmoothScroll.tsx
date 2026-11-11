@@ -19,6 +19,8 @@ export default function SmoothScroll() {
     });
     document.documentElement.classList.add("lenis-on");
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+    // ระหว่าง Intro (IntroLoader) ยังไม่ให้เลื่อนหน้า
+    if (document.documentElement.classList.contains("intro")) lenis.stop();
     return () => {
       lenis.destroy();
       document.documentElement.classList.remove("lenis-on");

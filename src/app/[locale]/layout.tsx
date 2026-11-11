@@ -43,7 +43,7 @@ export const viewport: Viewport = {
 };
 
 /** สคริปต์เล็กๆ ที่รันก่อนแสดงผล เพื่อใส่ class "dark" ทันที (ไม่ให้จอกระพริบ) */
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}document.documentElement.classList.remove('no-js');})();`;
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}document.documentElement.classList.remove('no-js');try{if(/^\\/(th|en)\\/?$/.test(location.pathname)&&!sessionStorage.getItem('mag-intro'))document.documentElement.classList.add('intro');}catch(e){}})();`;
 
 export default async function LocaleLayout({
   children,

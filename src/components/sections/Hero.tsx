@@ -133,6 +133,16 @@ export default function Hero({ t }: { t: Dictionary }) {
               />
             ),
           )}
+          {/* รูปพื้นหลัง "Manage to Achieve Goal" (จากเพจ Facebook) */}
+          <Image
+            src="/images/gallery/mission.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover"
+            style={{ opacity: finalIn, transform: `scale(${1.08 - finalIn * 0.08})` }}
+          />
+          <div className="absolute inset-0 bg-navy/45" style={{ opacity: finalIn }} />
           <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-navy/10" style={{ opacity: 0.35 + finalIn * 0.65 }} />
 
           {/* ชื่อโครงการในกรอบ */}
