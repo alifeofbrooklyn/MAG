@@ -14,7 +14,7 @@ import { useEffect, useRef } from "react";
  * - ปรับเวลาได้ที่ globals.css (หัวข้อ INTRO)
  */
 const LAYERS = 7; // จำนวนชั้นที่ซ้อนกันเป็นความหนาของโลโก้ 3D
-const TOTAL_MS = 3600;
+const TOTAL_MS = 5000;
 
 export default function IntroLoader({ skipLabel, tagline }: { skipLabel: string; tagline: string }) {
   const ref = useRef<HTMLDivElement>(null);

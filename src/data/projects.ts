@@ -73,7 +73,7 @@ export const projects: Project[] = [
       { label: L.designer, value: "Tava Architects Co., Ltd." },
       { label: L.consultant, value: "MAG CONSULTANT CO., LTD." },
     ],
-    gallery: gal("ratchawong", 4),
+    gallery: gal("ratchawong", 4).filter((g) => !g.endsWith("-02.webp")), // รูป 02 = รูปหน้าการ์ดแล้ว
     services: ALL,
   },
   {
@@ -92,7 +92,7 @@ export const projects: Project[] = [
       { label: L.designBuild, value: "K.BUILD CONSTRUCTION CO., LTD." },
       { label: L.interior, value: "LIVING INHABIT CO., LTD." },
     ],
-    gallery: ["/images/gallery/oblique-01.webp"],
+    gallery: ["/images/gallery/oblique-01.webp", "/images/gallery/oblique-02.webp", "/images/gallery/oblique-03.webp"],
     services: ALL,
   },
   {
@@ -113,7 +113,7 @@ export const projects: Project[] = [
       { label: L.building, value: "Renovation & extension, 1–2 storeys" },
     ],
     note: t("ระยะเวลาก่อสร้างตามแผน ประมาณ 1 ปี: พฤษภาคม 2568 – พฤษภาคม 2569", "Planned construction period approx. 1 year: May 2025 – May 2026"),
-    gallery: gal("baan100", 8),
+    gallery: gal("baan100", 7), // รูป 08 = รูปหน้าการ์ดแล้ว
     services: ALL,
   },
   {
@@ -130,7 +130,7 @@ export const projects: Project[] = [
       { label: L.designer, value: "Death by Arch Co., Ltd." },
       { label: L.consultant, value: "MAG CONSULTANT CO., LTD." },
     ],
-    gallery: gal("yannawa", 3),
+    gallery: gal("yannawa", 3).filter((g) => !g.endsWith("-02.webp")), // รูป 02 = รูปหน้าการ์ดแล้ว
     services: ["pm", "cm"],
   },
   {

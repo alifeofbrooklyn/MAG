@@ -206,7 +206,7 @@ function Lightbox({
         <X className="h-5 w-5" aria-hidden="true" />
       </button>
 
-      <div key={index} data-lenis-prevent className="pop-in grid max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-2xl bg-white shadow-2xl lg:grid-cols-12 dark:bg-navy-800">
+      <div key={index} data-lenis-prevent className="pop-in grid max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-2xl bg-white shadow-2xl max-lg:overflow-y-auto lg:h-[min(88vh,820px)] lg:grid-cols-12 lg:grid-rows-[minmax(0,1fr)] dark:bg-navy-800">
         {/* รูป + แกลเลอรี */}
         <div className="flex min-h-0 flex-col bg-navy-900 lg:col-span-7">
           <div className="relative aspect-[4/3] w-full overflow-hidden lg:aspect-auto lg:flex-1">
@@ -221,20 +221,41 @@ function Lightbox({
               </>
             )}
             {pics.length > 1 && (
+              <>
+                {/* ปุ่มเลื่อนรูปก่อนหน้า / ถัดไป ในโครงการเดียวกัน */}
+                <button
+                  type="button"
+                  onClick={() => setPic((pic - 1 + pics.length) % pics.length)}
+                  aria-label={`${t.projects.gallery} ${((pic - 1 + pics.length) % pics.length) + 1}`}
+                  className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur transition hover:bg-white hover:text-navy"
+                >
+                  <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPic((pic + 1) % pics.length)}
+                  aria-label={`${t.projects.gallery} ${((pic + 1) % pics.length) + 1}`}
+                  className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur transition hover:bg-white hover:text-navy"
+                >
+                  <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </>
+            )}
+            {pics.length > 1 && (
               <span className="absolute bottom-3 right-3 rounded-full bg-black/50 px-3 py-1 text-xs tabular-nums text-white backdrop-blur">
                 {pic + 1} / {pics.length}
               </span>
             )}
           </div>
           {pics.length > 1 && (
-            <div className="no-scrollbar flex gap-2 overflow-x-auto bg-navy-900 p-3">
+            <div className="flex flex-wrap justify-center gap-2 bg-navy-900 p-3">
               {pics.map((src, k) => (
                 <button
                   key={src}
                   type="button"
                   onClick={() => setPic(k)}
                   aria-label={`${t.projects.gallery} ${k + 1}`}
-                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-md ring-2 transition ${k === pic ? "ring-accent" : "opacity-60 ring-transparent hover:opacity-100"}`}
+                  className={`relative h-11 w-16 shrink-0 overflow-hidden rounded-md ring-2 transition ${k === pic ? "ring-accent" : "opacity-60 ring-transparent hover:opacity-100"}`}
                 >
                   <Image src={src} alt="" fill sizes="80px" className="object-cover" />
                 </button>

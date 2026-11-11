@@ -5,18 +5,20 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import type { Dictionary } from "@/i18n";
 import { images } from "@/data/images";
-import { products } from "@/data/products";
 import { sectionIds } from "@/data/site";
 import { buttonClass } from "@/components/ui/Button";
 import CountUp from "@/components/ui/CountUp";
 import Magnetic from "@/components/motion/Magnetic";
 import { lerp, range, useReducedMotion, useScrollProgress } from "@/components/motion/useScrollProgress";
 
-// รูปที่หมุนเวียนในกรอบ Hero (ครอปแนวกว้างจากรูป Products) — ไฟล์ public/images/products/hero-*.webp
-const SLIDES = ["harn", "ratchawong", "kene", "volvo", "dplus-office"].map((slug) => {
-  const pr = products.find((p) => p.slug === slug)!;
-  return { slug, name: pr.name, image: `/images/products/hero-${slug}.webp` };
-});
+// สไลด์ Hero — รูปจากโพสต์ Facebook ของ MAG CONSULTANT (ขยายเป็น 4K ด้วย Upscayl)
+// เปลี่ยนรูป: วางไฟล์ใหม่ใน public/images/products/ แล้วแก้ชื่อไฟล์/ชื่อที่นี่
+const SLIDES = [
+  { slug: "driveway-4k", name: "Lane Cove" },
+  { slug: "openplan-4k", name: "Open-Plan Living" },
+  { slug: "house-4k", name: "Seamless Integration" },
+  { slug: "dressing-4k", name: "Bespoke Dressing Room" },
+].map((s) => ({ ...s, image: `/images/products/hero-${s.slug}.webp` }));
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -75,9 +77,9 @@ export default function Hero({ t }: { t: Dictionary }) {
         <div className="hero-grid absolute inset-0 opacity-[0.08]" aria-hidden="true" />
         <div className="aurora absolute -left-40 top-10 h-[34rem] w-[34rem] rounded-full bg-accent/30 blur-[120px]" aria-hidden="true" />
 
-        {/* หัวข้อ */}
+        {/* หัวข้อ — จัดกึ่งกลางในพื้นที่ระหว่าง Header กับกรอบรูป */}
         <div
-          className="container relative z-10 flex max-w-6xl flex-col items-center pt-24 text-center sm:pt-28 lg:pt-[7.5rem]"
+          className="container relative z-10 flex h-[66svh] max-w-6xl flex-col items-center justify-center pt-20 text-center"
           style={{ opacity: headFade, transform: `translateY(${-p * 120}px)` }}
         >
           <h1
@@ -133,15 +135,6 @@ export default function Hero({ t }: { t: Dictionary }) {
               />
             ),
           )}
-          {/* รูปพื้นหลัง "Manage to Achieve Goal" (จากเพจ Facebook) */}
-          <Image
-            src="/images/gallery/mission.webp"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover"
-            style={{ opacity: finalIn, transform: `scale(${1.08 - finalIn * 0.08})` }}
-          />
           <div className="absolute inset-0 bg-navy/45" style={{ opacity: finalIn }} />
           <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-navy/10" style={{ opacity: 0.35 + finalIn * 0.65 }} />
 

@@ -275,14 +275,14 @@ html[lang="th"] .btn-outline-light { letter-spacing: .02em; font-size: .95rem; }
 .profile-timer { animation: profile-timer 5s linear forwards; }
 
 /* ===================== INTRO (โลโก้ 3D ละลาย → เปิดเข้าเว็บ) =====================
- * เวลารวม ~3.6 วินาที: ละลายเข้า 0.15–2.05s · ค้างโลโก้เต็ม + แสงวิ่ง · ม่านเลื่อนขึ้น 2.75–3.55s
+ * เวลารวม ~5 วินาที: ละลายเข้า 0.15–2.05s · ค้างโลโก้เต็ม + แสงวิ่ง 2 รอบ (2.0–4.2s) · ม่านเลื่อนขึ้น 4.2–5.0s
  * ถ้าแก้เวลา ให้แก้ TOTAL_MS ใน src/components/motion/IntroLoader.tsx ให้ตรงกันด้วย */
 .intro-overlay { display: none; }
 html.intro { overflow: hidden; }
 html.intro .intro-overlay {
   display: flex; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center;
   background: radial-gradient(90% 70% at 50% 40%, #124E78 0%, #0B1F3A 55%, #050f1e 100%);
-  animation: intro-out .8s cubic-bezier(.77,0,.18,1) 2.75s forwards;
+  animation: intro-out .8s cubic-bezier(.77,0,.18,1) 4.2s forwards;
   perspective: 1100px;
 }
 /* ระหว่าง intro ให้ animation ของ Hero รอไว้ก่อน แล้วค่อยเล่นตอนม่านเปิด */
@@ -298,7 +298,7 @@ header { transition: opacity .6s ease .1s; }
 .intro-stage { position: relative; display: flex; flex-direction: column; align-items: center; transform-style: preserve-3d; }
 .intro-logo {
   position: relative; width: min(62vw, 420px); aspect-ratio: 699 / 402; transform-style: preserve-3d;
-  animation: intro-spin 2.2s cubic-bezier(.16,1,.3,1) .1s both, intro-zoom .8s cubic-bezier(.77,0,.18,1) 2.7s forwards;
+  animation: intro-spin 2.2s cubic-bezier(.16,1,.3,1) .1s both, intro-zoom .8s cubic-bezier(.77,0,.18,1) 4.15s forwards;
 }
 .intro-layer { position: absolute; inset: 0; width: 100%; height: 100%; animation: intro-melt 1.9s ease-out .15s both; }
 .intro-sheen {
@@ -306,7 +306,7 @@ header { transition: opacity .6s ease .1s; }
   background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.95) 50%, transparent 65%);
   background-size: 250% 100%; background-position: 150% 0;
   -webkit-mask: url(/images/logo-white.png) center / contain no-repeat; mask: url(/images/logo-white.png) center / contain no-repeat;
-  animation: intro-sheen 1s ease-in-out 1.85s both;
+  animation: intro-sheen 1s ease-in-out 2s 2 both;
 }
 .intro-tagline {
   margin-top: 1.75rem; color: rgba(255,255,255,.8); font-size: .75rem; font-weight: 600;
@@ -346,6 +346,6 @@ header { transition: opacity .6s ease .1s; }
 }
 /* ผู้ใช้ตั้ง "ลดการเคลื่อนไหว": ไม่หมุน 3D แต่ยังมีการละลาย/จางเข้า */
 @media (prefers-reduced-motion: reduce) {
-  .intro-logo { animation: intro-fade-out .6s ease 2.7s forwards; }
+  .intro-logo { animation: intro-fade-out .6s ease 4.15s forwards; }
   @keyframes intro-fade-out { to { opacity: 0; } }
 }
